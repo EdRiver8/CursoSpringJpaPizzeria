@@ -1,6 +1,7 @@
 package com.edriver.pizza.persistence.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.edriver.pizza.persistence.audit.AuditPizzaListener;
+import com.edriver.pizza.persistence.audit.AuditableEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,12 +9,13 @@ import lombok.Setter;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.io.Serializable;
 
 @Entity
 @Table(name = "pizza")
 @Getter @Setter @NoArgsConstructor
-@EntityListeners(AuditingEntityListener.class)
-public class PizzaEntity extends AuditableEntity{
+@EntityListeners({AuditingEntityListener.class, AuditPizzaListener.class})
+public class PizzaEntity extends AuditableEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_pizza", nullable = false) // lanza un excepcion si este atributo es nulo
@@ -30,4 +32,26 @@ public class PizzaEntity extends AuditableEntity{
     private Boolean vegan;
     @Column(columnDefinition = "TINYINT", nullable = false)
     private Boolean available;
+//    @Column(name = "created_date")
+//    @CreatedDate
+//    @JsonIgnore // para que no se envien los datos al cliente
+//    private LocalDateTime createdDate;
+//    @Column(name = "modified_date")
+//    @LastModifiedBy
+//    @JsonIgnore // para que no se envien los datos al cliente
+//    private LocalDateTime modifiedDate;
+
+
+    @Override
+    public String toString() {
+        return "PizzaEntity{" +
+                "idPizza=" + idPizza +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", vegetarian=" + vegetarian +
+                ", vegan=" + vegan +
+                ", available=" + available +
+                '}';
+    }
 }

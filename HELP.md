@@ -32,3 +32,4 @@
 
 ### este paquete permite estandarizar los queries nativos que voy a ejecutar por medio de la creacion de interfaces.
 
+## Aplicar el Store Procedure en mysql workbench copiando de 'sp_take_random....' y ejecutando
